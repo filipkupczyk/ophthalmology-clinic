@@ -8,6 +8,5 @@ public class OphthalmologyBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OphthalmologyBackendApplication.class, args);
-        System.out.println("jebac legie");
 	}
 }
