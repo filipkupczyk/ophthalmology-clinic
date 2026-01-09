@@ -1,6 +1,7 @@
 package com.opth.clinic.ophthalmology_backend.model;
 
 import jakarta.persistence.*;
+import java.lang.Boolean;
 
 @Entity
 @Table(name = "doctors")
@@ -10,7 +11,7 @@ public class Doctor {
     private Long id;
     private String firstName;
     private String lastName;
-    private boolean active;
+    private Boolean active;
 
     public Long getId()  {
         return id;
@@ -33,10 +34,10 @@ public class Doctor {
         this.lastName = lastName;
     }
 
-    public boolean getActive() {
+    public Boolean getActive() {
         return active;
     }
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 

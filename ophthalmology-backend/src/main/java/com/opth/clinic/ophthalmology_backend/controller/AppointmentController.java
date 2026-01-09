@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Appointments")
+@RequestMapping("/appointments")
 public class AppointmentController {
     private final AppointmentService appointmentService;
 
@@ -26,7 +26,7 @@ public class AppointmentController {
         return appointmentService.getAppointmentById(id);
     }
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public Appointment createDoctor(@RequestBody Appointment appointment) {
         return appointmentService.addAppointment(appointment);
     }

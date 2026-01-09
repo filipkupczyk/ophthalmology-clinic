@@ -24,9 +24,9 @@ public class DoctorService {
 
     public Doctor updateDoctor(Long id, Doctor doctor) {
         Doctor existingDoctor = doctorRespository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
-        existingDoctor.setFirstName(doctor.getFirstName());
-        existingDoctor.setLastName(doctor.getLastName());
-        existingDoctor.setActive(doctor.getActive());
+        if(doctor.getFirstName() != null) existingDoctor.setFirstName(doctor.getFirstName());
+        if(doctor.getLastName() != null) existingDoctor.setLastName(doctor.getLastName());
+        if(doctor.getActive() != null) existingDoctor.setActive(doctor.getActive());
         return doctorRespository.save(existingDoctor);
     }
 

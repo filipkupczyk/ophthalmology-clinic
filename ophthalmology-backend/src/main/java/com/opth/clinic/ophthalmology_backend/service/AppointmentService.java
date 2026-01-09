@@ -40,12 +40,16 @@ public class AppointmentService {
 
     public Appointment updateAppointment(Long id, Appointment appointment) {
         Appointment existingAppointment = appointmentRespository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
-        Doctor doctor = doctorRespository.findById(appointment.getDoctor().getId()).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
-        User patient = userRespository.findById(appointment.getUser().getId()).orElseThrow(() -> new NotFoundException("Nie znaleziono pacjenta"));
-        existingAppointment.setDoctor(doctor);
-        existingAppointment.setUser(patient);
-        existingAppointment.setDateTime(appointment.getDateTime());
-        existingAppointment.setActive(appointment.getActive());
+        if (appointment.getDoctor() != null && appointment.getDoctor().getId() != null) {
+            Doctor doctor = doctorRespository.findById(appointment.getDoctor().getId()).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
+            if (appointment.getDoctor() != null)  existingAppointment.setDoctor(doctor);
+        }
+        if (appointment.getUser() != null && appointment.getUser().getId() != null) {
+            User patient = userRespository.findById(appointment.getUser().getId()).orElseThrow(() -> new NotFoundException("Nie znaleziono pacjenta"));
+            if (appointment.getUser() != null) existingAppointment.setUser(patient);
+        }
+        if (appointment.getDateTime() != null) existingAppointment.setDateTime(appointment.getDateTime());
+        if (appointment.getActive() != null) existingAppointment.setActive(appointment.getActive());
         return appointmentRespository.save(existingAppointment);
     }
 

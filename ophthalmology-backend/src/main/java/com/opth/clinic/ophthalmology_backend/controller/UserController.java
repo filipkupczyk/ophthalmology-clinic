@@ -31,7 +31,7 @@ public class UserController {
         return userService.UpdateUser(id, user);
     }
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public User createUser(@RequestBody User user) {
         return userService.addUser(user);
     }

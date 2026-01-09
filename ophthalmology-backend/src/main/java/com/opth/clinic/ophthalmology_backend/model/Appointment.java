@@ -19,7 +19,7 @@ public class Appointment {
 
     private LocalDateTime dateTime;
 
-    private boolean active;
+    private Boolean active;
 
     public Long getId() {
         return id;
@@ -50,10 +50,10 @@ public class Appointment {
         this.dateTime = dateTime;
     }
 
-    public boolean getActive(){
+    public Boolean getActive(){
         return active;
     }
-    public void setActive(boolean active){
+    public void setActive(Boolean active){
         this.active = active;
     }
 
