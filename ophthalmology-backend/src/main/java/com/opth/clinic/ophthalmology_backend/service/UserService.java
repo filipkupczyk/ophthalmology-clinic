@@ -4,15 +4,18 @@ import com.opth.clinic.ophthalmology_backend.dto.UserDto;
 import com.opth.clinic.ophthalmology_backend.exception.NotFoundException;
 import com.opth.clinic.ophthalmology_backend.model.User;
 import com.opth.clinic.ophthalmology_backend.respository.UserRespository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class UserService {
     private final UserRespository userRespository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRespository userRespository) {
+    public UserService(UserRespository userRespository,  PasswordEncoder passwordEncoder) {
         this.userRespository = userRespository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User getUserById(Long id) {
@@ -20,6 +23,7 @@ public class UserService {
     }
 
     public User addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRespository.save(user);
     }
 
