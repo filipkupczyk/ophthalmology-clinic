@@ -2,6 +2,7 @@ package com.opth.clinic.ophthalmology_backend.controller;
 
 import com.opth.clinic.ophthalmology_backend.model.Doctor;
 import com.opth.clinic.ophthalmology_backend.service.DoctorService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,17 +27,17 @@ public class DoctorController {
     }
 
     @PutMapping("/update/{id}")
-    public Doctor updateDoctorById(@PathVariable Long id, @RequestBody Doctor doctor) {
-        return doctorService.updateDoctor(id, doctor);
+    public Doctor updateDoctorById(@PathVariable Long id, @RequestBody Doctor doctor, Authentication auth) {
+        return doctorService.updateDoctor(id, doctor, auth);
     }
 
     @PostMapping("/create")
-    public Doctor createDoctor(@RequestBody Doctor doctor) {
-        return doctorService.addDoctor(doctor);
+    public Doctor createDoctor(@RequestBody Doctor doctor, Authentication auth) {
+        return doctorService.addDoctor(doctor, auth);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteDoctorById(@PathVariable Long id) {
-        doctorService.deleteDoctorById(id);
+    public void deleteDoctorById(@PathVariable Long id, Authentication auth) {
+        doctorService.deleteDoctorById(id, auth);
     }
 }

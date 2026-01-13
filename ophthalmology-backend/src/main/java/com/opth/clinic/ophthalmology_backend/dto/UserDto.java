@@ -1,9 +1,13 @@
 package com.opth.clinic.ophthalmology_backend.dto;
+import com.opth.clinic.ophthalmology_backend.model.Doctor;
+import com.opth.clinic.ophthalmology_backend.model.Role;
 
 public class UserDto {
         private String firstName;
         private String lastName;
         private String email;
+        private Role role;
+        private Doctor doctor;
 
         public UserDto() {}
 
@@ -32,5 +36,19 @@ public class UserDto {
     }
     public void setEmail(String email) {
             this.email = email;
+    }
+
+    public Role getRole() {
+            return role;
+    }
+    public void setRole(Role role) {
+            this.role = role;
+    }
+
+    public Doctor getDoctor() {
+            return doctor;
+    }
+    public void setDoctor(Doctor doctor) {
+            this.doctor = doctor;
     }
 }

@@ -21,6 +21,9 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id",  nullable = true)
+    private Doctor doctor;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -77,5 +80,12 @@ public class User implements UserDetails {
     }
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 }

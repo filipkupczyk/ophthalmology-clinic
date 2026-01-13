@@ -40,5 +40,4 @@ public class Doctor {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
 }
