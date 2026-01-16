@@ -41,3 +41,48 @@
 .custom-button-register:active {
   background-color: #a00f1a !important;
 }
+
+.dropdown-hover {
+    position: relative;
+}
+
+.dropdown-menu-custom {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #669bbc;
+  border-radius: 8px;
+  list-style: none;
+  padding: 0.5rem 0;
+  margin: 0;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-hover:hover .dropdown-menu-custom {
+  display: block;
+  transition-delay: 0s, 0.5s, 0s;
+}
+
+.dropdown-menu-custom li {
+    margin: 0;
+    color: #fdf0d5;
+}
+
+.dropdown-menu-custom a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #003049;
+  text-decoration: none;
+  transition: background-color 0.3s;
+    color: #fdf0d5;
+}
+
+.dropdown-menu-custom a:hover {
+  background-color: rgba(193, 18, 31, 0.1);
+  color: #C1121F;
+}
+
