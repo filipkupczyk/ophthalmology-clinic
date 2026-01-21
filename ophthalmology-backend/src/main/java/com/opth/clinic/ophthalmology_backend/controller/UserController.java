@@ -38,13 +38,18 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public User createUser(@RequestBody User user, Authentication auth) {
-        return userService.addUser(user, auth);
+    public User createUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteUserById(@PathVariable Long id, Authentication auth) {
         userService.deleteUserById(id, auth);
+    }
+
+    @GetMapping("/me")
+    public User getCurrentUser(Authentication auth) {
+        return userService.getCurrentUser(auth);
     }
 
 }

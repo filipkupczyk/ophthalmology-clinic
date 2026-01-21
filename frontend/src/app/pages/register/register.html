@@ -1,0 +1,17 @@
+<form (ngSubmit)="onSubmit()">
+    <label for="firstname">imie</label>
+    <input type="firstname" id="firstname" name="firstname" [(ngModel)]="credentials.firstName">
+    <label for="lastname">nazwisko</label>
+    <input type="lastname" id="lastname" name="lastname" [(ngModel)]="credentials.lastName">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" [(ngModel)]="credentials.email">
+    <label for="password">Hasło</label>
+    <input type="password" id="password" name="password" [(ngModel)]="credentials.password">
+    @if (isVisible) {
+        <div>
+            <label for="role">Rola</label>
+            <input for="role" id="role" name="role" [(ngModel)]="credentials.role">
+        </div>
+    }
+    <button type="submit">Zarejestruj</button>
+</form>

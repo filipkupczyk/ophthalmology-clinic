@@ -33,7 +33,7 @@ public class UserService {
         return userRespository.findById(id).get();
     }
 
-    public User addUser(User user, Authentication auth) {
+    public User addUser(User user) {
         if (userRespository.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException("Email jest zajety");
         }
@@ -107,6 +107,10 @@ public class UserService {
             throw new RuntimeException("You are not allowed to access this resource");
         }
         return userRespository.findAll();
+    }
+
+    public User getCurrentUser(Authentication auth) {
+        return userRespository.findByEmail(auth.getName()).get();
     }
 
 }
