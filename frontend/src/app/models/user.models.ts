@@ -14,3 +14,10 @@ export interface User {
     role: Role,
     doctorId?: number,
 }
+
+export interface Doctor {
+    id: number;
+    firstName: string;
+    lastName: string;
+    active: boolean;
+}

@@ -57,8 +57,10 @@ public class AppointmentService {
         newAppointment.setActive(true);
         newAppointment.setDateTime(appointment.getDateTime());
         if (role.equals("ROLE_ADMIN") || role.equals("ROLE_SECRETARY")) {
+            System.out.println("Entering ADMIN/SECRETARY block");
             User newUser = userRespository.findById(appointment.getUser().getId()).orElseThrow(()->new NotFoundException("User not found"));
             newAppointment.setUser(newUser);
+            System.out.println("Set user to: " + newUser.getId());
         }
         else if (role.equals("ROLE_PATIENT")) {
             newAppointment.setUser(user);

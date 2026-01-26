@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RegisterRequest } from '../../models/auth.model';
+import { User } from '../../models/user.models';
 import { Auth } from '../../services/auth';
-import { Router } from '@angular/router';
+import { isActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   imports: [FormsModule, CommonModule],
+  standalone: true,
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
+  currentUser$: Observable<User | null>;
+
   credentials: RegisterRequest = {
     email: '',
     password: '',
@@ -20,34 +25,23 @@ export class Register {
     role: ''
   };
   errorMassage = '';
-  isVisible = false;
 
   constructor(
     private authService: Auth,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    if (this.authService.isAdmin()) {
-      this.isVisible = true;
-    }
+    private router: Router,
+  ) {
+    this.currentUser$ = this.authService.currentUser$;
   }
+
+    get isAdmin(): boolean {
+      return this.authService.isAdmin();
+    }
 
   onSubmit(): void {
-    if (!this.authService.isAdmin()) {
-      this.credentials.role = 'PATIENT';
-    }
+    this.credentials.role = this.isAdmin ? this.credentials.role : 'PATIENT';
     this.authService.register(this.credentials).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        this.errorMassage = "Nie można stworzyć urzytkownika";
-        console.error("Register error", error);
-      }
-    }
-    )
+      next: () => this.router.navigate(['/login']),
+      error: () => this.errorMassage = 'Nie mozna stworzyc uzytkownika'
+    });
   }
-
 }

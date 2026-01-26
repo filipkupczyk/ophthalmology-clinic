@@ -7,7 +7,7 @@
     <input type="email" id="email" name="email" [(ngModel)]="credentials.email">
     <label for="password">Hasło</label>
     <input type="password" id="password" name="password" [(ngModel)]="credentials.password">
-    @if (isVisible) {
+    @if (isAdmin) {
         <div>
             <label for="role">Rola</label>
             <input for="role" id="role" name="role" [(ngModel)]="credentials.role">

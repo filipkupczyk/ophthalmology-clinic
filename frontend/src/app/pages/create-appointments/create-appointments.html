@@ -1,0 +1,18 @@
+<form (ngSubmit)="ngOnSubmit()">
+    <select [(ngModel)]="selectedDoctorId" name="doctors" id="doctor">
+        <option *ngFor="let doctor of Doctors" [ngValue]="doctor.id">{{doctor.firstName}} {{doctor.lastName}}</option>
+    </select>
+    @if (isAdmin) {
+        <div>
+            <label for="patient">Pacjent</label>
+            <input id="patient" name="patient" [(ngModel)]="selectedPatientId">
+        </div>
+    }
+    <label for="date">Data: </label>
+    <input type="datetime-local" id="dateTime" name="date" [(ngModel)]="selectedDateTime">
+    <!-- <label for="email">Email</label>
+    <input type="email" id="email" name="email" [(ngModel)]="credentials.email">
+    <label for="password">Hasło</label>
+    <input type="password" id="password" name="password" [(ngModel)]="credentials.password"> -->
+    <button type="submit">Zarejestruj</button>
+</form>

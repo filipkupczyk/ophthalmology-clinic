@@ -13,12 +13,18 @@ export class Auth {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    const token = this.getToken();
-    if (token) {
-      this.loadCurrentUser();
-    }
+    // const token = this.getToken();
+    // if (token) {
+    //   this.loadCurrentUser();
+    // }
   }
   
+  initAuth() {
+    const token = this.getToken();
+    if (!token) return;
+    this.loadCurrentUser();
+  }
+
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials)
     .pipe(
@@ -39,7 +45,12 @@ export class Auth {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+
+    if (!token || token === 'null' || token === 'undefined') {
+      return null;
+    }
+    return token;
   }
 
   setToken(token: string): void {
