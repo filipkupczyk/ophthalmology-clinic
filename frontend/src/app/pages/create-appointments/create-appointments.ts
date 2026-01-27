@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { CreateAppointmentRequest, Appointment } from '../../models/app.model';
+import { Appointment } from '../../models/app.model';
 import { AppointmentService } from '../../services/appointment.service';
 import { DoctorService } from '../../services/doctor.service';
 import { Auth } from '../../services/auth';
 import { Doctor } from '../../models/user.models';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, debounceTime, switchMap } from 'rxjs';
 import { User } from '../../models/user.models';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-appointments',
@@ -21,15 +22,22 @@ export class CreateAppointments {
   selectedDoctorId: number = 0;
   selectedPatientId: number = 0;
   selectedDateTime: string = '';
+  patientFirstName: string = '';
+  patientLastName:string  = '';
+  isDone: boolean = false;
+  show: boolean = false;
 
   Doctors: Doctor[] = [];
+  Patients: User[] = [];
   errorMessage = '';
+  private searchSubject = new Subject<{firstName: string, lastName: string}>();
 
   constructor(
     private appointmentService: AppointmentService,
     private doctorService: DoctorService,
     private authService: Auth,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {
     this.currentUser$ = authService.currentUser$;
   }
@@ -38,7 +46,33 @@ export class CreateAppointments {
     return this.authService.isAdmin();
   }
 
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
   ngOnInit(): void {
+    if (this.isLoggedIn){
+      this.show = true;
+      this.cdr.detectChanges();
+    }
+    this.searchSubject.pipe(
+      debounceTime(500),
+      distinctUntilChanged((prev, curr) => {
+      const same = prev.firstName === curr.firstName && prev.lastName === curr.lastName;
+      console.log('distinctUntilChanged - prev:', prev, 'curr:', curr, 'same:', same);
+      return same;}),
+    switchMap(({firstName, lastName}) => {
+      console.log('switchMap called with:', {firstName, lastName});
+      return this.authService.searchUsers(firstName, lastName);
+    })).subscribe(data => {
+      console.log('Response received: ', data);
+      this.Patients = data;
+      this.cdr.detectChanges();
+      if (data.length > 0) {
+        this.selectedPatientId = data[0].id;
+      }
+      console.log(data);
+    });
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => {
         this.Doctors = data;
@@ -73,6 +107,11 @@ export class CreateAppointments {
     }
     this.appointmentService.createNewApp(credentials).subscribe({
       next: (data) => {
+        this.isDone = true;
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.router.navigate(['/appointments']);
+        }, 2000);
         console.log('Created:', data);
       },
       error: (err) => {
@@ -86,6 +125,26 @@ export class CreateAppointments {
         }
       }
     })
+  }
+
+  onPatientSearch(): void {
+    const firstValid = this.patientFirstName?.length >= 2;
+    const lastValid = this.patientLastName?.length >= 2;
+    console.log('firstValid:', firstValid, 'lastValid:', lastValid);
+    console.log('firstName:', this.patientFirstName, 'lastName:', this.patientLastName);
+
+
+    if (!firstValid && !lastValid) {
+      this.Patients = [];
+      console.log("Cleared - both invalid");
+      return; 
+    }
+
+    const firstNameParam = firstValid ? this.patientFirstName : '';
+    const lastNameParam = lastValid ? this.patientLastName: ''; 
+
+    console.log('Sending to subject:', {firstName: firstNameParam, lastName: lastNameParam});
+    this.searchSubject.next( {firstName: firstNameParam, lastName: lastNameParam});
   }
 }
 

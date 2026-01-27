@@ -10,6 +10,10 @@ import com.opth.clinic.ophthalmology_backend.respository.UserRespository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -111,6 +115,31 @@ public class UserService {
 
     public User getCurrentUser(Authentication auth) {
         return userRespository.findByEmail(auth.getName()).get();
+    }
+
+    public List<User> searchUsers(@RequestParam String firstName, @RequestParam String lastName, Authentication auth) {
+        String role = auth.getAuthorities().iterator().next().getAuthority();
+        if (!role.equals("ROLE_ADMIN")) {
+            throw new RuntimeException("You are not allowed to access this resource");
+        }
+        Role patientRole = Role.PATIENT;
+        boolean firstNameEmpty = firstName == null || firstName.trim().isEmpty();
+        boolean lastNameEmpty = lastName == null || lastName.trim().isEmpty();
+
+        if (firstNameEmpty && lastNameEmpty) {
+            return Collections.emptyList();
+        }
+
+        if (!firstNameEmpty && !lastNameEmpty) {
+            return userRespository.findByRoleAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(
+                    patientRole, firstName, lastName);
+        }
+
+        if (!firstNameEmpty) {
+            return userRespository.findByRoleAndFirstNameContainingIgnoreCase(patientRole, firstName);
+        }
+
+        return userRespository.findByRoleAndLastNameContainingIgnoreCase(patientRole, lastName);
     }
 
 }

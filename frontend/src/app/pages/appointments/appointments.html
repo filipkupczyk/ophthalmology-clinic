@@ -3,5 +3,7 @@
     <div>Nazwisko pacjenta: {{app.user.lastName}}</div>
     <div>Doktor: {{app.doctor.firstName}} {{app.doctor.lastName}}</div>
     <div>Data: {{app.dateTime | date:'dd/MM/yyyy HH:mm'}}</div>
+    <button [routerLink]="['/appointments/edit', app.id]">Edytuj</button>
+    <button (click)="onDelete(app.id)" >Usun</button>
     <br>
 </div>

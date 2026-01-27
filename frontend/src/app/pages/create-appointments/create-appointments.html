@@ -1,18 +1,36 @@
-<form (ngSubmit)="ngOnSubmit()">
+@if (show) {
+    <form (ngSubmit)="ngOnSubmit()">
+    Wybór lekarza:
     <select [(ngModel)]="selectedDoctorId" name="doctors" id="doctor">
         <option *ngFor="let doctor of Doctors" [ngValue]="doctor.id">{{doctor.firstName}} {{doctor.lastName}}</option>
     </select>
     @if (isAdmin) {
         <div>
-            <label for="patient">Pacjent</label>
-            <input id="patient" name="patient" [(ngModel)]="selectedPatientId">
+            <label for="patientFirstName">Imie Pacjenta</label>
+            <input id="patientFirstName" name="patientFirstName" 
+            [(ngModel)]="patientFirstName"
+            (ngModelChange)="onPatientSearch()">
+            <label for="patientLastName" >Nazwisko Pacjenta</label>
+            <input id="patientLastName" name="patientLastName"
+            [(ngModel)]="patientLastName"
+            (ngModelChange)="onPatientSearch()">
+        </div>
+        <div *ngIf="Patients.length > 0">
+            Lista pacjentów:
+        <select 
+        [(ngModel)]="selectedPatientId" name="patients" id="patients">
+            <option *ngFor="let patient of Patients" [ngValue]="patient.id">{{patient.firstName}} {{patient.lastName}}</option>
+        </select>
         </div>
     }
     <label for="date">Data: </label>
     <input type="datetime-local" id="dateTime" name="date" [(ngModel)]="selectedDateTime">
-    <!-- <label for="email">Email</label>
-    <input type="email" id="email" name="email" [(ngModel)]="credentials.email">
-    <label for="password">Hasło</label>
-    <input type="password" id="password" name="password" [(ngModel)]="credentials.password"> -->
     <button type="submit">Zarejestruj</button>
+    @if (isDone) {
+        <div>Wizyta poprwanie zarejestronawa</div>
+    }
 </form>
+}
+@else {
+    Prosze się zalogować!
+}

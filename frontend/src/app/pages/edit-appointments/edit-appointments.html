@@ -1,1 +1,16 @@
-<p>edit-appointments works!</p>
+<form (ngSubmit)="ngOnSubmit()">
+    <div *ngIf="appointment">
+        <div>Imie pacjenta : {{appointment.user.firstName}}</div>
+        <div>Nazwisko pacjenta: {{appointment.user.lastName}}</div>
+        <select [(ngModel)]="selectedDoctorId" name="doctors" id="doctor">
+            <option *ngFor="let doctor of Doctors" [ngValue]="doctor.id">{{doctor.firstName}} {{doctor.lastName}}</option>
+        </select>
+            <label for="date">Data: </label>
+        <input type="datetime-local" id="dateTime" name="date" value="selectedDateTime" [(ngModel)]="selectedDateTime">
+        <button type="submit">Edytuj</button>
+        @if (isDone) {
+            <div>Wizyta zaaktualizowana poprawnie</div>
+        }
+    </div>
+</form>
+

@@ -2,10 +2,11 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AppointmentService } from '../../services/appointment.service';
 import { CommonModule } from '@angular/common';
 import { Appointment } from '../../models/app.model';
+import { RouterLink, RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-appointments',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './appointments.html',
   styleUrl: './appointments.css',
 })
@@ -21,14 +22,17 @@ export class Appointments implements OnInit {
   ngOnInit(): void {
     this.appointmentService.allApp().subscribe({
       next: (data) => {
-        console.log('CAŁY OBIEKT:', data[0]);
-        console.log('CZY MA dateTime?', 'dateTime' in data[0]);
-        console.log('WARTOŚĆ dateTime:', data[0].dateTime);
-        console.log('TYP dateTime:', typeof data[0].dateTime);
         this.appointments = data
+        console.log(data);
         this.cdr.detectChanges();
       },
       error: (err) => console.error(err)
     });
+  }
+
+  onDelete(id: number): void {
+    this.appointmentService.deleteApp(id).subscribe();
+    this.appointments = this.appointments.filter(app => app.id !== id);
+    this.cdr.detectChanges();
   }
 }

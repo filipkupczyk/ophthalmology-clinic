@@ -12,12 +12,7 @@ export class Auth {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    // const token = this.getToken();
-    // if (token) {
-    //   this.loadCurrentUser();
-    // }
-  }
+  constructor(private http: HttpClient) {}
   
   initAuth() {
     const token = this.getToken();
@@ -70,6 +65,10 @@ export class Auth {
         console.error('Błąd ładownaia użytkownika:', error);
       }
     })
+  }
+
+  searchUsers(firstName: string, lastName: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users/search?firstName=${firstName}&lastName=${lastName}`);
   }
 
   getCurrentUser(): User | null {

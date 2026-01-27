@@ -20,5 +20,9 @@ export const routes: Routes = [
     {
         path: 'appointments/create',
         loadComponent: () => import('./pages/create-appointments/create-appointments').then(m => m.CreateAppointments)
+    },
+    {
+        path: 'appointments/edit/:id',
+        loadComponent: () => import('./pages/edit-appointments/edit-appointments').then(m  => m.EditAppointments)
     }
 ];

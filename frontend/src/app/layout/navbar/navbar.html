@@ -14,7 +14,7 @@
             </ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link" style="color: #FDF0D5;" href="#">UMÓW WIZYTĘ</a>
+        <a class="nav-link" style="color: #FDF0D5;" routerLink='/appointments/create'>UMÓW WIZYTĘ</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" style="color: #FDF0D5;" href="#">ZAKRES USŁUG</a>
@@ -28,14 +28,25 @@
     </ul>
 
     <!-- Przyciski po prawej -->
-    <div class="d-flex gap-3" style="padding-right: 3rem;">
-      <button class="btn btn-outline-light rounded-pill px-4 custom-button-login">
+     @if (!isLogged) {
+      <div class="d-flex gap-3" style="padding-right: 3rem;">
+      <button class="btn btn-outline-light rounded-pill px-4 custom-button-login" [routerLink]="'/login'">
         Zaloguj się
       </button>
-      <button class="btn custom-button-register rounded-pill px-4">
+      <button class="btn custom-button-register rounded-pill px-4" [routerLink]="'/register'">
         Zarejestruj się
       </button>
     </div>
+     }
+     @else {
+      <button class="btn custom-button-register rounded-pill px-4" [routerLink]="'/appointments'">
+        Twoje wizyty
+      </button>
+      <button class="btn custom-button-register rounded-pill px-4" [routerLink]="'/'" (click)="logout()">
+        Wyloguj
+      </button>
+     }
+
   </div>
 </nav>
 

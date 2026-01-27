@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateAppointmentRequest, UpdaAppointmentRequest } from '../models/app.model';
+import { UpdaAppointmentRequest } from '../models/app.model';
 import { Auth } from './auth';
 import { Observable } from 'rxjs';
 import { Appointment } from '../models/app.model';
@@ -29,8 +29,8 @@ export class AppointmentService {
     return this.http.post<Appointment>(`${this.apiUrl}/create`, credentials)
   }
 
-  updateApp(credentials: UpdaAppointmentRequest): Observable<Appointment> {
-    return this.http.put<Appointment>(`${this.apiUrl}/update/${credentials.id}`, credentials)
+  updateApp(credentials: Partial<Appointment>, id:number): Observable<Appointment> {
+    return this.http.put<Appointment>(`${this.apiUrl}/update/${id}`, credentials)
   }
 
   deleteApp(id: number): Observable<void> {

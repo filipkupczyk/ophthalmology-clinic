@@ -52,4 +52,9 @@ public class UserController {
         return userService.getCurrentUser(auth);
     }
 
+    @GetMapping("/search")
+    public List<User> searchUsers(@RequestParam String firstName, @RequestParam String lastName, Authentication auth) {
+        return userService.searchUsers(firstName, lastName, auth);
+    }
+
 }
