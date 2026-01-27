@@ -1,4 +1,4 @@
- Ophthalmology Clinic Backend
+ Ophthalmology Clinic
 
 Backend aplikacji do zarządzania kliniką okulistyczną.  
 Projekt realizowany w Spring Boot z wykorzystaniem JWT oraz Spring Security.
