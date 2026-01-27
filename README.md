@@ -114,3 +114,6 @@ Frontend: funkcjonalność aplikacji została zaimplementowana
 - Przeprojektowanie interfejsu użytkownika
 - Responsywność
 - Dodatkowe animacje i UX improvements
+
+## Autor:
+Filip Kupczyk
