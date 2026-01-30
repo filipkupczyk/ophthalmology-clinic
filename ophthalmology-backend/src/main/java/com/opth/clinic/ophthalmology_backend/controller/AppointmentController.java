@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/appointments")
@@ -29,7 +30,7 @@ public class AppointmentController {
     }
 
     @PostMapping("/create")
-    public Appointment createAppointment(@RequestBody Appointment appointment,  Authentication auth) {
+    public Appointment createAppointment(@RequestBody Appointment appointment, Authentication auth) {
         return appointmentService.addAppointment(appointment, auth);
     }
 

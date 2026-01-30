@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentService {
@@ -55,6 +56,10 @@ public class AppointmentService {
         Appointment newAppointment = new Appointment();
         newAppointment.setDoctor(doctor);
         newAppointment.setActive(true);
+        Optional<Appointment> optional = appointmentRespository.findByDoctorIdAndDateTime(appointment.getDoctor().getId(), appointment.getDateTime()) ;
+        if (optional.isPresent()) {
+            throw new RuntimeException("Wizyta na tą godzine jest juz umówiona");
+        }
         newAppointment.setDateTime(appointment.getDateTime());
         if (role.equals("ROLE_ADMIN") || role.equals("ROLE_SECRETARY")) {
             System.out.println("Entering ADMIN/SECRETARY block");

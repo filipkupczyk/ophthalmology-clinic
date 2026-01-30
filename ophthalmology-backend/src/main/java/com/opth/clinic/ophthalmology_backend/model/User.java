@@ -19,6 +19,10 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+//    private String address;
+//    private String pesel;
+//    private String dateOfBirth;
+//    private int phoneNumber;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)

@@ -22,8 +22,9 @@ export class Register {
     password: '',
     firstName: '',
     lastName: '',
-    role: ''
+    role: 'PATIENT'
   };
+  role: string = 'PATIENT';
   errorMassage = '';
 
   constructor(
@@ -38,8 +39,12 @@ export class Register {
     }
 
   onSubmit(): void {
-    this.credentials.role = this.isAdmin ? this.credentials.role : 'PATIENT';
-    this.authService.register(this.credentials).subscribe({
+    this.credentials.role = this.isAdmin ? this.role : 'PATIENT';
+    const endpoint = this.isAdmin
+    ? this.authService.registerAdmin(this.credentials)
+    : this.authService.register(this.credentials) as Observable<any>;
+
+    endpoint.subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => this.errorMassage = 'Nie mozna stworzyc uzytkownika'
     });

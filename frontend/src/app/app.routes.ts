@@ -19,7 +19,8 @@ export const routes: Routes = [
     },
     {
         path: 'appointments/create',
-        loadComponent: () => import('./pages/create-appointments/create-appointments').then(m => m.CreateAppointments)
+        loadComponent: () => import('./pages/create-appointments/create-appointments').then(m => m.CreateAppointments),
+        runGuardsAndResolvers: 'always'
     },
     {
         path: 'appointments/edit/:id',

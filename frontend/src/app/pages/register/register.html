@@ -9,8 +9,13 @@
     <input type="password" id="password" name="password" [(ngModel)]="credentials.password">
     @if (isAdmin) {
         <div>
-            <label for="role">Rola</label>
-            <input for="role" id="role" name="role" [(ngModel)]="credentials.role">
+            <label for="role">Rola:</label>
+            <select [(ngModel)]="role" name="role">
+                <option value ="PATIENT">Pacjent</option>
+                <option value ="DOCTOR">Lekarz</option>
+                <option value ="SECRETARY">Sekretarka</option>
+                <option value ="ADMIN">Admin</option>
+            </select>
         </div>
     }
     <button type="submit">Zarejestruj</button>

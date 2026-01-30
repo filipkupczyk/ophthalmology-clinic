@@ -1,19 +1,27 @@
 @if (show) {
     <form (ngSubmit)="ngOnSubmit()">
     Wybór lekarza:
-    <select [(ngModel)]="selectedDoctorId" name="doctors" id="doctor">
+    <select [(ngModel)]="selectedDoctorId" name="doctors" id="doctor" (change)="onDoctorsChange()">
         <option *ngFor="let doctor of Doctors" [ngValue]="doctor.id">{{doctor.firstName}} {{doctor.lastName}}</option>
     </select>
     @if (isAdmin) {
         <div>
+            Czy to pierwsza wizyta?
+            <input type="checkbox" [(ngModel)]="isFirstVisit" name="isFirstVisit"><br>
             <label for="patientFirstName">Imie Pacjenta</label>
             <input id="patientFirstName" name="patientFirstName" 
             [(ngModel)]="patientFirstName"
             (ngModelChange)="onPatientSearch()">
-            <label for="patientLastName" >Nazwisko Pacjenta</label>
+            <label for="patientLastName">Nazwisko Pacjenta</label>
             <input id="patientLastName" name="patientLastName"
             [(ngModel)]="patientLastName"
             (ngModelChange)="onPatientSearch()">
+            @if (isFirstVisit) {
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" [(ngModel)]="patientEmail">
+                <label for="password">Hasło</label>
+                <input type="password" id="password" name="password" [(ngModel)]="patientPassword">
+            }
         </div>
         <div *ngIf="Patients.length > 0">
             Lista pacjentów:
@@ -23,8 +31,28 @@
         </select>
         </div>
     }
-    <label for="date">Data: </label>
-    <input type="datetime-local" id="dateTime" name="date" [(ngModel)]="selectedDateTime">
+    <mat-form-field>
+        <mat-label>Data wizyty</mat-label>
+        <input matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="selectedDate"
+        name="appointmentDate"
+        [matDatepickerFilter]="currentDateFilter"
+        [disabled]="selectedDoctorId === 0">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Godzina</mat-label>
+      <mat-select [(ngModel)]="selectedHour" name="appointmentTime">
+        <mat-option *ngFor="let slot of availableTimeSlotsFiltered" [value]="slot" style="background-color: white;">
+          {{slot}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <label for="date">Data: </label>
+    <input type="datetime-local" id="dateTime" name="date" [(ngModel)]="selectedDateTime"> -->
     <button type="submit">Zarejestruj</button>
     @if (isDone) {
         <div>Wizyta poprwanie zarejestronawa</div>

@@ -83,4 +83,12 @@ export class Auth {
   isAdmin(): boolean {
     return this.hasRole('ADMIN');
   }
+
+  registerAdmin(data: RegisterRequest): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/users/admin/create`, data);
+  }
+
+  getUser(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/${id}`);
+  }
 }

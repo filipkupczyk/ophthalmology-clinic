@@ -53,7 +53,7 @@ public class UserService {
     public User addUserAdmin(User user, Authentication auth) {
         String role = auth.getAuthorities().iterator().next().getAuthority();
 
-        if (!role.equals("ROLE_ADMIN")) {
+        if (!role.equals("ROLE_ADMIN") && !role.equals("ROLE_SECRETARY")) {
             throw new RuntimeException("You are not allowed to access this resource");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
