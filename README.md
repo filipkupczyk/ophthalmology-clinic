@@ -1,9 +1,10 @@
- Ophthalmology Clinic Backend
+ Ophthalmology Clinic
 
 Backend aplikacji do zarządzania kliniką okulistyczną.  
 Projekt realizowany w Spring Boot z wykorzystaniem JWT oraz Spring Security.
 
 Frontend aplikacji znajduje się w trakcie budowy.
+Funkcjonalność została zaimplementowana, warstwa UI/UX zostanie dopracowana w kolejnych iteracjach.
 
 ---
 
@@ -17,7 +18,9 @@ Frontend aplikacji znajduje się w trakcie budowy.
 - Hibernate
 - MySQL
 - Maven
-
+- Angular 21
+- TypeScript
+- Bootstrap
 ---
 
 ## Funkcjonalności
@@ -105,4 +108,12 @@ Endpointy:
 ## Status projektu
 
 Backend: gotowy działający i przetestowany
-Frontend: w trakcie implementacji
+Frontend: funkcjonalność aplikacji została zaimplementowana
+
+## Planowany rozwój:
+- Przeprojektowanie interfejsu użytkownika
+- Responsywność
+- Dodatkowe animacje i UX improvements
+
+## Autor:
+Filip Kupczyk
